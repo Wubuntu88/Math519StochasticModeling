@@ -1,6 +1,6 @@
 ---
 title: "Question 20 from Time Series Homework 3"
-output: html_notebook
+#output: html_notebook
 ---
 
 Question 20:
@@ -43,7 +43,7 @@ a_1 = 1.0
 sigma = 7.0
 size = 100
 v = generate_AR1_process(y_1 = y_1, a_1 = a_1, sigma = sigma, size = size)
-plot(v,type = "o", col = "red")
+plot(v, type = "o", col = "red")
 ```
 i) Construct a simulation to experimentally determine the variance (or Std.Dev.) of an AR(1) process at time 10 with parameter a_1=0.4 and sigma=7. Use y(0)=0.
 ```{r}
