@@ -18,11 +18,12 @@ print(p)
 
 # c) What is the steady-state distribution? Compute it using methods learned in class.
 # Answer, I will treat the 'quintiles' as income bins, that way it is possible for transitions between states
-state_vector = np.array([1, 1, 1, 1, 1])
+state_vector = np.array([12, 1, 11, 1, 21])
 ITERATIONS_LIMIT = 1000
 i = 0
 while i < ITERATIONS_LIMIT:
     state_vector = state_vector.dot(transition_matrix)
-    state_vector /= sum(state_vector)
     i += 1
+state_vector /= sum(state_vector)
+print('steady state vector:')
 print(state_vector)
