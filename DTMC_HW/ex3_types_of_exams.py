@@ -31,6 +31,7 @@ state_vector /= sum(state_vector)
 print('steady state vector:')
 print(state_vector)
 
+
 plt.plot(test_1_convergence_array, c='burlywood', linewidth=8)
 plt.plot(test_2_convergence_array, c='mediumaquamarine', linewidth=12)
 plt.plot(test_3_convergence_array, c='crimson', linewidth=4)
