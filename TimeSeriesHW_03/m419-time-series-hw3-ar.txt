@@ -1,0 +1,144 @@
+Math 419W/519
+AutoRegressive process homework
+
+Undergrads: choose 4 of these questions; after that, every extra question you do is
+worth 10% extra credit.
+Grad students: choose 6 of these questions; after that, every extra question you do is
+worth 10% extra credit.
+
+Note that some (or many) questions are deliberately a bit vague, allowing you to exercise judgement.
+
+Question 10:
+This is intended to be an experimental question:
+For what values of a_2 and a_1 is an AR(2) process stationary? For what values is it oscillatory? Draw regions on the (x=a_1, y=a_2) plane to show your results. 
+
+-----------------
+Question 20:
+In this problem, there is a way to do the problem using pencil-and-paper analysis, 
+or you could even look up the answers in various time-series textbooks (paper or online). 
+But, from my point of view, that would ruin the fun. 
+
+i) Construct a simulation to experimentally determine the variance (or Std.Dev.) of an AR(1) process at time 10 with parameter a_1=0.4 and sigma=7. Use y(0)=0.
+
+ii) Now try a wide variety of different sigma values. Make a record of your experiments. Describe the relationship between sigma or sigma^2 and Var(y(10)) or SD(y(10)), ideally using a formula.
+
+iii) Now set sigma=7 and try a wide variety of a_1 values. Make a record of your experiments. Describe the relationship between a_1 and Var(y(10)) or SD(y(10)).
+
+iv) Does y(100) or y(1000) behave differently than y(10) ?
+
+v) [optional and hard] Now consider an AR(2) process. How does Var(y(1000)) vary with a_1 and a_2 ? Make a record of your experiments.
+-----------------
+Question 30:
+How/how quickly does the variance approach its asymptotic value in an AR(1) process?
+This is a paper-and-pencil question.
+
+You will need two facts about variance: 
+1) Var(constant*random variable)=constant^2*Var(random variable)
+and 
+2) Var(thing1+thing2) = Var(thing1) + Var(thing2), as long as thing1 and thing2 are uncorrelated.
+
+Using y(t+1) = a*y(t) + Normal(0,variance=sigma^2):
+
+i) Suppose Var(y(0))=0. What is Var(y(1)) ? 
+ii) What is Var(y(2)) ?
+iii) What is Var(y(3)) ? Try to simplify it to the form sigma^2*(simple stuff involving only "a")
+iv) What is Var(y(t)) ? Again, try to simplify it.
+
+v) Graph it, for a=0.1 and a=0.5 and a=0.9, all on the same graph.
+Describe the manner in which this is growing/changing:
+exponential or geometric growth? exponential decay? Polynomial? Logarithmic? Other (describe)?
+
+vi) If a=0.9, how long do you have to wait for the process to be "warmed up" (near its asymptotic variance)? Does it depend on sigma?
+vii) What if a=0.95 ?
+viii) [optional] Also try to answer parts (vi) and (vii) using the ACF, which is a^L at lag L.
+ix) [optional] What is the key thing that keeps this method from working just as easily on an AR(2) process?
+(I'm not saying it becomes impossible, just that it isn't as easy.)
+
+-----------------
+Question 40:
+This is a paper-and-pencil question.
+A quick way to get the asymptotic variance of an AR(1) process:
+In steady-state, Var(y(t+1)) is the same as Var(y(t)).
+Also, Var(y(t+1)) = Var(a*y(t) + Normal(0,variance=sigma^2) )
+Solve for Var(y(t)) (or Var(y(t+1)), same thing!)
+-----------------
+Question 50:
+Let's investigate the idea of "overdifferencing". This is an experimental question.
+i) Set up a white noise process, plus a constant value of 3.
+ii) Take a running cumulative sum of part (i)
+iii) Take a running cumulative sum of part (ii)
+iv) Now suppose that part (iii) was the original data set. It's clearly not stationary, right? So take differences.
+Is the result stationary?
+v) If the result of part (iv) wasn't stationary, take differences again. Is the result stationary?
+If so, compute the StdDev of the data.
+vi) Take differences again. Is it stationary? If so, compute the StdDev. 
+vii) Look at the results of part (v) and (vi). Write a sentence or two about "overdifferencing".
+viii) [optional] for advanced thought: In some cases it's possible that we need to take a difference not once or twice or 3 times, but 2.5 or 1.something times.
+These are called "fractionally integrated" processes. Hmm. Ponder.
+-----------------
+Question 60:
+From "The analysis of time series : an introduction" by Christopher Chatfield, 
+158:
+"... the variances of sample cross-correlations depend on the autocorrelation functions of the two components. 
+In general, the variances will be inflated. 
+Thus, even for moderately large values of N up to about 200, or even higher, it is possible for two series, which are actually unrelated, to give rise to apparently "large" cross-correlation coefficients, which are spurious, in that they arise solely from autocorrelations within the two time series.
+Thus, if a test is required for non-zero correlation between two time series, then (at least) one of the series should first be filtered to convert it to (approximate) white noise. The same filter should then be applied to the second series before computing the cross-correlation function."
+This idea is called pre-whitening. Let's think about it in terms of just a single data set to start with, not even doing a cross-correlation.
+
+This is a paper-and-pencil question.
+i) If you have data that comes from an AR(1) process, how do you process it to get white noise?
+Suppose that you know the parameter of the AR(1) process.
+ii) If you have data that comes from an AR(2) process, how do you process it to get white noise?
+Suppose that you know the parameters of the AR(2) process.
+
+-----------------
+Question 70:
+This is intended to be an experimental question:
+
+Play with the idea of a vector-valued AR(1) process, where the a_1 parameter is now a matrix.
+Start with a 2-by-2 matrix. How will you treat the noise term: same noise in each component? independent? correlated?
+
+Scalar-valued AR(1) processes can't oscillate slowly--they either oscillate every-other-step (if a_1 < 0) or not at all. Is that true for vector-valued AR(1) processes?
+
+-----------------
+Question 80:
+Explore the idea of transforming a differential equation into an AR process. 
+This is a paper-and-pencil problem, but if you wanted to try out your ideas electronically that wouldn't be a bad idea.
+
+Remember that f'(t) is approximately ( f(t) + f(t - dt) ) /dt 
+Or, it's also approximately ( f(t+dt) - f(t) ) / dt, in case it makes a difference.
+Also, f''(t) is approximately ( f(t+dt) - 2*f(t) + f(t-dt) ) / ( dt^2 )
+
+i) if f'(t) = k * f(t) + b, what is the corresponding AR(1) process?
+ii) if f''(t) = k * f(t) + b, what is the corresponding AR(2) process? 
+ [note: this is a simplified version of problem (iii) below. You might want to just handle the more general problem below? It's up to you.]
+iii) if f''(t) = k * f(t) + c*f'(t) + b, what is the corresponding AR(2) process?  
+-----------------
+Question 90:
+[hard?]
+An AR(1) model can't have long-term oscillations, on average. It either oscillates (on average) across y=0 at every step, if the a_1 coefficient is negative, or not, if the coefficient is positive.
+An AR(2) model can have long sine-wave-like oscillations, though. For example, try
+a_1 = 1.998, a_2 = -0.999; it has a wavelength of around 200.
+
+What extra freedom does an AR(3) model give us that an AR(2) model can't do?
+-----------------
+Question 100:
+[hard?]
+The AR models we've seen use a linear function of the past values. What types of nonlinear models might be interesting/useful?
+http://faculty.washington.edu/ezivot/econ584/notes/nonlinear.pdf
+-----------------
+Question 110:
+[hard?] And deliberately vague!
+Suppose you wanted to program an animation of fireflies moving around in the darkness.
+For simplicity we'll suppose their light is always on, instead of blinking on and off.
+Also, we want them to stay roughly in a viewing window, on average, instead of wandering off.
+i) If you use separate AR(1) processes for x and for y, does that give a realistic simulation?
+Does it keep them roughly in a viewing window, on average?
+ii) If you use separate AR(1) processes for the x velocity and y velocity, does that give a
+realistic simulation?
+Does it keep them roughly in a viewing window, on average?
+iii) If you use separate AR(2) processes for x and y, does that give a realistic simulation?
+Does it keep them roughly in a viewing window, on average?
+iv) What if you use separate AR(1) processes for x and y, but then use a moving average to smooth things?
+
+Any other thoughts?

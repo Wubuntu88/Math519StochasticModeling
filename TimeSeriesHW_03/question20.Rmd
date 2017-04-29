@@ -1,0 +1,160 @@
+---
+title: "Question 20 from Time Series Homework 3"
+#output: html_notebook
+---
+
+Question 20:
+In this problem, there is a way to do the problem using pencil-and-paper analysis, 
+or you could even look up the answers in various time-series textbooks (paper or online). 
+But, from my point of view, that would ruin the fun. 
+
+i) Construct a simulation to experimentally determine the variance (or Std.Dev.) of an AR(1) process at time 10 with parameter a_1=0.4 and sigma=7. Use y(0)=0.
+
+ii) Now try a wide variety of different sigma values. Make a record of your experiments. Describe the relationship between sigma or sigma^2 and Var(y(10)) or SD(y(10)), ideally using a formula.
+
+iii) Now set sigma=7 and try a wide variety of a_1 values. Make a record of your experiments. Describe the relationship between a_1 and Var(y(10)) or SD(y(10)).
+
+iv) Does y(100) or y(1000) behave differently than y(10) ?
+
+v) -optional and hard- Now consider an AR(2) process. How does Var(y(1000)) vary with a_1 and a_2 ? Make a record of your experiments.
+
+
+Try executing this chunk by clicking the *Run* button within the chunk or by placing your cursor inside it and pressing *Cmd+Shift+Enter*. 
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file).
+
+Start of Homework
+```{r}
+generate_AR1_process = function(y_1, a_1, sigma, size) {
+  vector = 1:size
+  vector[1] = 0
+  for (i in 2:size) {
+    vector[i] = a_1 * vector[i - 1] + sigma * rnorm(1, mean = 0, sd = 1)
+  }
+  return(vector)
+}
+```
+The following block shows a line plot of the AR(1) process
+```{r}
+y_1 = 0
+a_1 = 1.0
+sigma = 7.0
+size = 100
+v = generate_AR1_process(y_1 = y_1, a_1 = a_1, sigma = sigma, size = size)
+plot(v, type = "o", col = "red")
+```
+i) Construct a simulation to experimentally determine the variance (or Std.Dev.) of an AR(1) process at time 10 with parameter a_1=0.4 and sigma=7. Use y(0)=0.
+```{r}
+make_samples_of_y_n = function(y_1, a_1, sigma, size, iterations) {
+  samples_of_y_n = sapply(1:ITERATIONS, 
+                         function(x) generate_AR1_process(y_1 = y_1, a_1 = a_1, sigma = sigma, size = size)[size])
+  return(samples_of_y_n)
+}
+y_1 = 0
+a_1 = 1.0
+sigma = 7.0
+size = 10 # try with 100, 1000, etc
+ITERATIONS = 100
+samples_of_y_10 = make_samples_of_y_n(y_1 = y_1, a_1 = a_1, sigma = sigma, 
+                                       size = size, iterations = ITERATIONS)
+variance_of_samples = var(samples_of_y_10)
+stdev_of_samples = sd(samples_of_y_10)
+print(sprintf("variance of samples of y_%d: %5.3f", size, variance_of_samples))
+print(sprintf("stdev of samples of y_%d: %5.3f", size, stdev_of_samples))
+```
+
+ii) Now try a wide variety of different sigma values. Make a record of your experiments. Describe the relationship between sigma or sigma^2 and Var(y(10)) or SD(y(10)), ideally using a formula.
+```{r}
+y_1 = 0
+a_1 = 1.0
+size = 10
+sigmas = 1:20 # <- note that this is a range !! =)
+ITERATIONS = 100
+#calculates a range of varianes corresponding to the sigma range 1:10
+the_variances_of_samples = sapply(sigmas, 
+                                  function(sig) var(make_samples_of_y_n(y_1 = y_1,
+                                                                         a_1 = a_1,
+                                                                         sigma = sig,
+                                                                         size = size,
+                                                                         iterations = ITERATIONS)))
+variance_output= "the variances (sigma: var): "
+variance_output_result = sprintf("(sigma: %2d, var: %5.2f)\n", sigmas, the_variances_of_samples)
+variance_output= cat(variance_output, "\n", variance_output_result)
+plot(the_variances_of_samples, xlab="sigmas", type = "o", col = "red")
+
+#calculates a range of standard deviations corresponding to the sigma range 1:10
+the_stdev_of_samples = sapply(sigmas, 
+                              function(sig) sd(make_samples_of_y_n(y_1 = y_1,
+                                                                     a_1 = a_1,
+                                                                     sigma = sig,
+                                                                     size = size,
+                                                                     iterations = ITERATIONS)))
+stdev_output= "the stdevs (sigma: stdev): "
+stdev_output_result = sprintf("(sigma: %2d, var: %5.2f)\n", sigmas, the_stdev_of_samples)
+stdev_output= cat(stdev_output, "\n", stdev_output_result)
+plot(the_stdev_of_samples, xlab="sigmas", type = "o", col = "red")
+```
+
+iii) Now set sigma=7 and try a wide variety of a_1 values. Make a record of your experiments. Describe the relationship between a_1 and Var(y(10)) or SD(y(10)).
+```{r}
+y_1 = 0
+a_1s = seq(from = 0.1, to = 2.0, by = .1)
+size = 10
+sigmas = 7
+ITERATIONS = 100
+
+the_variances_of_samples = sapply(a_1s,
+                                  function(a_1) var(make_samples_of_y_n(y_1 = y_1,
+                                                                         a_1 = a_1,
+                                                                         sigma = sigma,
+                                                                         size = size,
+                                                                         iterations = ITERATIONS)))
+variance_output= "the variances (a_1: var): "
+variance_output_result = sprintf("(a_1: %3.2f, var: %5.2f)\n", a_1s, the_variances_of_samples)
+variance_output= cat(variance_output, "\n", variance_output_result)
+plot(a_1s,the_variances_of_samples, xlab="a_1s", type = "o", col = "red")
+
+#calculates a range of standard deviations corresponding to the sigma range 1:10
+the_stdev_of_samples = sapply(a_1s,
+                              function(a_1) sd(make_samples_of_y_n(y_1 = y_1,
+                                                                     a_1 = a_1,
+                                                                     sigma = sigma,
+                                                                     size = size,
+                                                                     iterations = ITERATIONS)))
+stdev_output= "the stdevs (a_1: stdev): "
+stdev_output_result = sprintf("(a_1: %3.2f, var: %5.2f)\n", a_1s, the_stdev_of_samples)
+stdev_output= cat(stdev_output, "\n", stdev_output_result)
+plot(a_1s, the_stdev_of_samples, xlab="a_1s", type = "o", col = "red")
+```
+
+Observation: as a_1 increases, the standard deviation and variance of the sample y_10s grow with exponential or polynomial growth (i.e. x^2).
+
+--
+iv) Does y(100) or y(1000) behave differently than y(10) ?
+
+I calculated the variance and stdevs for y_10, y_100, and y_100 using the code block for answer (i)
+
+for y_10
+[1] "variance of samples of y_10: 470.086"
+[1] "stdev of samples of y_10: 21.681"
+
+for y_100
+[1] "variance of samples of y_100: 5082.061"
+[1] "stdev of samples of y_100: 71.289"
+
+for y_1000
+[1] "variance of samples of y_1000: 45840.570"
+[1] "stdev of samples of y_1000: 214.104"
+
+I tried plotting the variance and stdev for y_100, y_1000 with the sigmas from 1:20.
+The standard deviations and variances increased in value but the trend in the increase was the same.
+
+I also tried plotting the variance and stdevs for y_100, y_100 with a_1s ranging from .1 to 2.0.
+The stdevs and variances are much greater for higher values of y.
+The trend in growth seems to be the same for y_1 - y_10.  The growth looks exponential or polynomial (x^2)
+
+I would say no, y_100 and y_1000 do not behave differently than y_10.
+
+v) -optional and hard- Now consider an AR(2) process. How does Var(y(1000)) vary with a_1 and a_2 ? Make a record of your experiments.
