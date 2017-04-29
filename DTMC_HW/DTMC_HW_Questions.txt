@@ -1,0 +1,340 @@
+Math 419W/519
+Homework for Discrete Time Markov Chains (Chapter 4 in Sheldon Ross book)
+
+For any problem that involves finding numerical steady-state values,
+do _not_ do it by hand; instead, use Excel, R, or some other
+similar tool. If the problem involves symbolic steady-state values,
+then you may do it by hand.
+
+None of these questions use any randomness like =RAND() unless noted.
+
+These problem numbers refer to the 11th edition.
+
+Some of the questions below are deliberately poorly phrased, since
+that's life. It's up to you to adapt sensibly when needed.
+
+----------------------------------------------------------------------
+Problem 4.29 Employee job classifications (this is pretty easy)
+[4pts]
+or, do this problem:
+A molecule of water is hanging around the Great Lakes region,
+consisting of the 5 lakes (M,S,H,E,O), or the air above the region
+(which we'll call "A"), from which it might fall as rain or dew back
+into a lake. Suppose it follows this transition matrix.
+I'm leaving the time step size unspecified, since I'm making up
+these numbers anyway.
+
+M S H E O A
+M .8 0 .1 0 0 .1
+S 0 .98 .01 0 0 .01
+H 0 0 .8 .15 0 .05
+E 0 0 0 .7 .2 .1
+O 0 0 0 0 .9 .1
+A .1 .3 .3 .1 .1 .1
+
+i) Explain what is good and what is not-so-good about this model.
+ii) Now pretend the model is perfect as I specified it,
+and find the relative amounts of water in each compartment.
+iii) optional/project idea: make a more accurate model, and/or
+adjust the transition probabilities.
+----------------------------------------------------------------------
+Economic Quintile Problem
+
+Use the graph at
+http://people.emich.edu/aross15/coursepack3419/opportunity-1.png
+to create a Markov Chain model of income mobility from one generation
+to the next. The 1st quintile is the poorest, and the 5th is the richest.
+a) What is the transition matrix? Figure out where each number goes.
+There is a subtle issue here--what is it? Figure out what it is and
+fix it in a reasonable way.
+b) If you are in the 5th quintile, what is the probability that
+your grandson will be in the 1st quintile?
+c) What is the steady-state distribution? Compute it using methods
+learned in class.
+d) Explain the result you got in part (c).
+e) Consider a person who is politically liberal/left-wing.
+What would they want the transition matrix in part (a) to look like?
+f) Consider a person who is politically conservative/right-wing.
+What would they want the transition matrix in part (a) to look like?
+
+
+----------------------------------------------------------------------
+
+Problem 4.33 Three types of exams (also not too bad)
+[4 pts for matrix, 4 for solution]
+or, do this problem:
+A workplace has a sign that says something like "4 days accident-free".
+Of course, the number of days is updated each day, either increasing
+by 1 or jumping back to 0. Suppose an accident happens with probability
+0.1 on any day, and each day is independent.
+a) Is this a Markov chain? Explain why or why not.
+b) If it is a Markov chain, formulate a Markov matrix for it.
+Limit it to at most 9 days accident-free.
+If it is not a Markov chain, find some way to simulate it, possibly
+using =RAND() or similar functions.
+c) Find the steady-state distribution, either numerically or by simulation.
+d) Is the steady-state distribution similar to any common discrete distribution?
+Explain.
+
+----------------------------------------------------------------------
+Problem 4.46 The Umbrella Problem
+Hints: Does it work if your state is "# of umbrellas at home"?
+What about "# of umbrellas at work"? Any other ideas?
+Ultimately, your transition matrix will have a diagonal look to it,
+but from lower-left to upper-right as opposed to the usual matrix
+diagonal.
+Once you have the matrix, finding the steady-state solution is
+pretty much guess-and-check, and they give you the guess. You
+should formally check it, though.
+[4 for matrix, 4 for pi proof, 4 for Pr(wet), 4 for maximizing]
+or, do this problem:
+Consider a 3-by-3 tic-tac-toe board. At each step, a marker hops from
+its current cell to an up/down/left/right adjacent cell, choosing with
+equal probability among its available options.
+It cannot stay in the same cell during a hop.
+i) Formulate a Markov chain for it.
+ii) What do you think the steady-state solution will be?
+iii) Find the steady-state solution. Is it what you thought it might be? Explain.
+iv) Imagine that the marker cannot hop back to the cell it just came from.
+Describe any needed changes in the Markov model, but you do not have to
+formulate the matrix.
+
+----------------------------------------------------------------------
+Problem 4.52: the taxi-driver, city with 2 zones.
+It's possible to do this using a 2-state or a 4-state chain;
+I recommend the 2-state.
+First, find the proportion of trips that start in zone A.
+Then, find the expected profit per trip starting in zone A.
+Then, the expected profit per trip starting in zone B.
+Then, combine them for the overall expected profit per trip.
+
+Hint: one of the intermediate values you might get in this problem
+is 0.4285714
+[4 for matrix, 4 for pi vector, 4 for average cost]
+or, do this problem:
+Suppose an insurance company finds that their cost due to claims for each day
+depends on the weather that day, and the weather the day before (because
+the weather turning bad catches some people by surprise).
+Pretend the weather each day is either Good, Fair, or bad. Also pretend that
+only today is useful in predicting tomorrrow, and that the transition matrix is:
+G F B
+G .6 .3 .1
+F .2 .6 .2
+B .2 .3 .5
+Also, here are the costs for each type of transition, in millions of dollars:
+G F B
+G 1 2 8
+F 3 4 6
+B 4 5 5
+What is the long-run average cost per day?
+
+----------------------------------------------------------------------
+An inventory problem.
+Suppose we receive a shipment of 3 items every day.
+Our daily demand has a Uniform distribution on 0,1,2,3,4,5,6,7,
+with no changes in behavior according to day-of-the-week.
+Our warehouse only has room for 10 items during the
+overnight period. Here is the timeline for events:
+Midnight: take inventory; this is the DTMC state variable
+6am: receive shipment of 3 items.
+8am-9pm: demand occurs. If we run out of inventory, orders are lost
+(as opposed to being backordered)
+10pm: discard excess inventory that won't fit in the warehouse.
+Midnight: take inventory again, etc.
+Questions:
+(a) Formulate the transition matrix. Hint: the value in the upper-
+left corner is 0.625
+(b) What is the probability we end up with nothing in the warehouse
+overnight? Hint: it's around 0.3
+(c) If it costs $10 per item in the warehouse overnight, what is
+our average inventory cost per night? Hint: it's around $28 or $29
+
+The following part is for grad students, though of course undergrads should
+contemplate it. The calculations are somewhat intricate.
+(d) What is the average number of items discarded per night
+due to warehouse limitations?
+Also, for everyone to contemplate but not solve unless you really want to:
+(e) What fraction of our customers find us out of stock?
+[4 for each part]
+----------------------------------------------------------------------
+For the highway repair problem discussed in class, suppose you follow
+the policy beta=
+E M C N
+G [ 0 0 .4 .6 ]
+F [ 0 0 1 0 ]
+B [ .1 .2 .7 0 ]
+Define X0 to be the status in the year 2007, and X1 to be the status
+in the year 2008. What is Pr(X1 = G | X0 = B)?
+(I might have said Poor instead of Bad; they mean the same thing)
+
+[4 pts]
+----------------------------------------------------------------------
+Read and contemplate problem 4.42, about
+the balance equations pi=pi*P.
+Write in your homework your questions about the problem statements.
+Comment on your level of understanding.
+[4 pts]
+----------------------------------------------------------------------
+Consider the Ehrenfest urn model, where a fixed number (n) of total
+molecules are put in two chambers connected by a very narrow passage,
+such that only one molecule at a time can move from one to the other.
+At each step, one of the molecules (regardless of location) is
+randomly selected and it moves to the other chamber.
+let X_t be the # of molecules in chamber 1 at step t.
+a) Write the transition matrix for this DTMC, with n=4.
+b) Find the steady-state distribution numerically (or symbolically if you wish)
+c) Read page 240 (11th edition, Chapter 4.8, just before Example 4.36).
+
+Optional: also see Problem 4.54, about how the mean changes with time.
+It exponentially decays toward n/2.
+
+Also optional: what would a 3-chamber version look like? Suppose each chamber
+was connected to each other chamber.
+
+Also optional: what would a 3-chamber version look like? Suppose the 3 chambers
+were in a row, with the middle chamber connected to the 2 others, but no direct
+connection between the leftmost and rightmost chamber.
+
+Also optional: what if, instead of choosing a molecule at random regardless of
+its position, we randomly choose 1 of the 2 chambers (with 50/50 prob.),
+then choose a molecule from that and move it to the other chamber.
+How does the transition matrix change, if at all?
+[4 pts]
+----------------------------------------------------------------------
+Optional: No-Backtracking 2D random walk
+Simulate (using RAND() or RANDBETWEEN() or equivalent) a 2-dimensional random walk
+that will not step back to the place it just came from (though it might return to
+a place it's already visited, just not on the most recent step).
+Suppose it can only step in the 4 main directions: North, South, East, West.
+Ask some good questions about how it behaves, and answer them.
+If you need help generating good questions, ask me.
+How do things change if the steps can be N,S,E,W,NE,SE,NW,SW?
+----------------------------------------------------------------------
+
+This problem is inspired by a question from
+"Finite Markov Chains and Algorithmic Applications"
+by Olle Haggstrom.
+
+Consider a simple set of web pages:
+A links to B and C
+B links to A and D
+C links to A
+D links to A, B, and C
+a) Write down the DTMC matrix for a random web surfer who picks
+an outbound link with equal probability from all outbound links
+on the current page.
+
+b) Now suppose that in addition to following links, the surfer
+might randomly jump to any page on this little web (including
+the current page) by doing a search. This happens with probability
+0.15. Can you still describe this situation with a Markov Chain?
+Explain. If so, what does the new transition matrix look like?
+
+c) Now ignore the modification in part (b) and consider the model
+from part (a) again. Suppose that the random surfer hits the "back"
+button on the browser with probability 0.05.
+Can you still describe this situation with a Markov Chain? Explain.
+If so, what does the new transition matrix look like?
+[4 pts for each part]
+----------------------------------------------------------------------
+This problem is inspired by a question from
+"Finite Markov Chains and Algorithmic Applications"
+by Olle Haggstrom.
+
+Consider a DTMC whose states are labelled "-1", "0", and "+1", and
+whose transition matrix is:
+to: -1 0 +1
+from -1: [ 0 1 0 ]
+from 0: [ 0 0 1 ]
+from +1: [ 1 0 0 ]
+
+a) Suppose you generate data from this DTMC for 10 steps, starting
+with -1. What would that data look like?
+X_0 = -1
+X_1 = ?
+X_2 = ?
+etc.
+
+b) Let f(x) = x^2, and let Y_n = f(X_n); that is, Y_n is a function
+of the data from the original DTMC. Generate data for the first 10
+steps of Y_n:
+Y_0 = (-1)^2 = +1
+Y_1 = ?
+Y_2 = ?
+etc.
+
+c) Is Y_n a Markov Chain? Explain. If so, give the transition matrix.
+
+[4 pts]
+----------------------------------------------------------------------
+optional, for advanced pondering:
+We've talked about Markov processes with 1 day of history (the usual kind),
+and with 2 days of history, etc.
+What would it mean to have a non-integer number of days of history?
+
+----------------------------------------------------------------------
+for grad students (though undergrads should also read these and contemplate):
+Choose one of these four problems. Each is worth 16 total points.
+Branching Process (stochastic version of exponential growth or decay)
+a) Simulate a branching process with Pr(lives and has 1 offspring)=p, Pr(dies)=q.
+You might like to use the BINOM.INV(trials,probability_s,alpha) function in Excel
+to simulate a random Binomial, like this: BINOM.INV(#individuals,p,rand())
+b) Make a large transition matrix for the same model (that will update live
+if you change p and q). Start with 1 individual, and take many vector*matrix steps.
+You might want to use the BINOMDIST function in Excel.
+Come up with some interesting questions to ask, and answer them. If you want help
+coming up with questions, email me.
+c) repeat (a) and (b) for a branching process with no deaths:
+Pr(lives and has 1 offspring)=p, Pr(lives but no offspring this time)=q.
+d) (optional) can you change the model so it has a carrying capacity, and
+growth slows down as comes nearer to that capacity? And if the population
+is above the carrying capacity, it will be pulled downward toward the carrying capacity?
+
+
+Problem 4.36: A Hidden Markov Model
+Do the problem as specified in the book. Then, do the following
+extension:
+
+Prof. Ross has generated data on Y using
+P=[.04 .96; .96 .04], and p0 = .02, p1 = .97
+and put it on the web:
+http://people.emich.edu/aross15/math419/4_36data.txt
+
+Take this Y data and show that
+Pr{Y_{n}=1 | Y_{n-1}=1} is different than
+Pr{Y_{n}=1 | Y_{n-1}=1 and Y_{n-2}=1}; and
+that's different than using 3 steps of history, etc.
+This shows that the Yn values are not a Markov chain.
+
+Three Independent Machines:
+Consider a system with three independent machines.
+Each one has a probability "f" of failing on any particular day
+that it's working, and then once it's broken it has a
+probability "r" of being repaired on any particular day.
+a) Formulate a DTMC that describes this system of 3 machines.
+Your formulation could have 4 states or 8 states; I recommend 8
+states, because it's easier to figure out the transition probabilities.
+b) Guess a symbolic steady-state distribution and check that it is true.
+
+Gambler's Ruin with Ties
+Let's modify Gambler's Ruin to allow a coin-flip to result in a tie.
+Now, Pr{lose once}=a, Pr{tie}=b, Pr{win once}=c, with a+b+c=1.
+a) Write down a new system of linear equations that the P_i
+values must satisfy.
+
+b) Guess a new formula to solve the new set of linear equations.
+Recall that the solution to the linear equations without ties was
+P_i = (1-gamma^i)/(1-gamma^N), where gamma=q/p
+(I may have used the name alpha in class instead of gamma; whatever.)
+Hint: does it work to just change the definition of gamma?
+
+You may ignore the case where we might divide by zero.
+Show that your guess indeed solves the system of linear equations.
+
+c) What is the new system of equations for M_i ?
+
+---------------------------
+reading suggestion for the adventurous:
+"Markov Chains and Mixing Times" by Levin, Peres, and Wilmer
+http://pages.uoregon.edu/dlevin/MARKOV/
+(gets into some cool advanced stuff)
