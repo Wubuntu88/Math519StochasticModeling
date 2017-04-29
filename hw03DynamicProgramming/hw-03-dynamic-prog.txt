@@ -1,0 +1,57 @@
+Dynamic Programming homework
+
+Your homework should be typed in Word or something similar, with
+appropriate spreadsheet segments copied and pasted in.  
+
+On each problem's part (a), do it without considering any software like
+Excel, Matlab, R, etc.
+
+1.  Recall the shortest-path problem we did in class.  Find a way to
+do it in Excel or some other software package (your choice).
+
+2.  Consider the same network that we used for the shortest-path problem,
+but now instead of minimizing the total path length, we want to minimize
+the longest single road segment we use (for example, our car is unreliable
+and we don't want to go on long roads where we'd be far from help if it
+breaks down).
+a) Define your value function and write a recursion for it, and define your
+ boundary values.
+b) Solve either by hand or using software.  Report the optimal value and path.
+c) Compare the path to the original shortest-path problem. If it is the same,
+describe what kind of changes would have to happen for this new problem
+to give a different optimal path than the old problem?
+
+3.  Again consider the same network, but now interpret each road cost (divided
+by 100) as the probability of car failure on that road.  What route gives the
+highest overall probability of success?  For a path to succeed, you need to
+have a success on each road on that path.  The probability of this is _not_ 
+just the sum of the success probabilities.
+a) Define your value function and write a recursion for it, and define your
+ boundary values.
+b) Solve either by hand or using software.  Report the optimal value and path.
+c) Compare this path to the original shortest-path problem. If it is the same,
+describe what kind of changes would have to happen for this new problem
+to give a different optimal path than the old problem?
+
+
+4.  Again consider the same network.  Now we're back to the original shortest-
+path problem.  but change the cost on the road from P to B to be 1 billion (10^9)
+(yikes!).  And, decisions to go up succeed with probability 80%; 
+decisions to go down succeed with probability 90% (this may be
+backwards from what we said in class; use the values here).  If a decision
+doesn't succeed, that means you end up going the opposite way that you chose.
+Minimize the total expected path cost.
+a) Define your value function and write a recursion for it, and define your
+ boundary values.
+b) Solve either by hand or using software.  Report the optimal value and path.
+c) Compare to the original shortest-path problem. If it is the same,
+describe what kind of changes would have to happen for this new problem
+to give a different optimal path than the old problem?
+
+
+--------------------------
+5.  Your professor will send you a link to some academic papers that use
+dynamic programming.  Skim through them. Pick one to read in depth.
+Write down any questions that occur to you (things you don't understand,
+etc.)
+
